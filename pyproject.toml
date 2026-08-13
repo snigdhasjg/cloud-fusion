@@ -23,6 +23,9 @@ keywords = [
     "aws-authentication",
     "aws-sdk-python",
     "aws-auth",
+    "gcp",
+    "gcloud",
+    "google-cloud",
 ]
 classifiers = [
     "Programming Language :: Python :: 3",
@@ -59,9 +62,13 @@ packages = ["cloud_fusion"]
 
 [tool.hatch.build.targets.wheel.shared-scripts]
 "bin/_awsp" = "_awsp"
-"bin/_awsr" = "_awsr"
 "bin/_awsp.ps1" = "_awsp.ps1"
+"bin/_awsr" = "_awsr"
 "bin/_awsr.ps1" = "_awsr.ps1"
+"bin/_gcpc" = "_gcpc"
+"bin/_gcpc.ps1" = "_gcpc.ps1"
+"bin/_gcpr" = "_gcpr"
+"bin/_gcpr.ps1" = "_gcpr.ps1"
 
 [tool.hatch.build.targets.sdist]
 include = [

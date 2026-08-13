@@ -2,7 +2,7 @@ import argparse
 import logging
 from . import __version__
 
-from .providers import aws
+from .providers import aws, gcp
 from .exceptions import handle_cli_errors
 
 
@@ -15,7 +15,8 @@ def main():
     subparsers = main_parser.add_subparsers(dest='command', required=True, help='Available commands')
 
     commands = [
-        aws
+        aws,
+        gcp
     ]
     [command.setup(subparsers, global_parser) for command in commands]
 

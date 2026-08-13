@@ -34,6 +34,10 @@ AWS provider (`cloud_fusion/providers/aws/`) subcommands and what they wrap — 
 
 Two credential caches with different shapes coexist: `~/.aws/cli/cache` (AWS CLI–compatible, used by `open-browser` for boto3's built-in providers) and `~/.aws/saml/cache` (this tool's own, used only by `okta device-auth`). Both stay under `~/.aws/` even after the rename — no state migration was done, so existing installs keep working unchanged.
 
+GCP provider (`cloud_fusion/providers/gcp/`) — invoked as `cloud-fusion gcp <command>`:
+
+- `config-switch configuration|region` — interactive `inquirer` picker, same UX as the AWS one, but choices are enumerated by shelling out to `gcloud` (`providers/gcp/gcloud.py` wraps `subprocess`, never parses `~/.config/gcloud/` directly) and the selection is applied **globally** via `gcloud config configurations activate` / `gcloud config set compute/region` — unlike AWS, there's no per-shell state file. `configuration` also runs `gcloud auth application-default set-quota-project` on the newly active project (best-effort; skip with `--skip-quota-project`). `bin/_gcpc` / `bin/_gcpr` (and `.ps1` equivalents) are thin wrappers around `cloud-fusion gcp config-switch configuration|region` — they do **not** need to be sourced, since the mutation already happened inside the `cloud-fusion` process and there's no env var to export back into the caller's shell.
+
 ## Release / CI
 
 `.github/workflows/publish.yml` is the only workflow. It runs on:
@@ -42,4 +46,4 @@ Two credential caches with different shapes coexist: `~/.aws/cli/cache` (AWS CLI
 
 So bumping `__version__` in `cloud_fusion/__init__.py` on `main` is the release trigger. Don't bump it casually.
 
-The `[tool.hatch.build.targets.wheel.shared-scripts]` table in `pyproject.toml` installs `bin/_awsp`, `bin/_awsr`, and their `.ps1` siblings onto the user's PATH — keep that table in sync if new shell helpers are added. These scripts are named `_aws*` deliberately (AWS-specific), unlike the rest of the CLI.
+The `[tool.hatch.build.targets.wheel.shared-scripts]` table in `pyproject.toml` installs `bin/_awsp`, `bin/_awsr`, `bin/_gcpc`, `bin/_gcpr`, and their `.ps1` siblings onto the user's PATH — keep that table in sync if new shell helpers are added. Each provider's scripts carry that provider's prefix (`_aws*`, `_gcp*`), unlike the rest of the CLI.

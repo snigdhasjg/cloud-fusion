@@ -33,6 +33,9 @@ Flags:
 Command:
   aws [<flags>] <sub-command>
     AWS authentication and convenience commands.
+
+  gcp [<flags>] <sub-command>
+    GCP convenience commands.
 ```
 
 ### `aws` sub-commands
@@ -94,6 +97,26 @@ Command:
 
   config-switch region [<flags>]
     Switch between available aws region.
+```
+
+### `gcp` sub-commands
+
+```commandline
+usage: cloud-fusion gcp [<flags>] <sub-command> ...
+
+GCP convenience commands.
+
+Command:
+  config-switch [<flags>] <sub-command>
+    Switching between GCP config.
+
+  config-switch configuration [<flags>]
+    Switch between available gcloud configuration.
+
+        --skip-quota-project Skip updating the application-default credentials quota project after switching
+
+  config-switch region [<flags>]
+    Switch between available gcloud compute region.
 ```
 
 ---
@@ -194,7 +217,7 @@ credential_process = cloud-fusion aws okta device-auth --org-domain my.okta.com 
 ```
 
 ---
-## Use case of `config-switch`
+## Use case of `aws config-switch`
 A special of utility script to help easily switch `profile` and `region`
 
 ### For Linux & Darwin (MacOS)
@@ -220,6 +243,42 @@ Set-Alias awsr "_awsr.ps1"
 ```
 
 <img src="https://raw.githubusercontent.com/snigdhasjg/cloud-fusion/main/doc/images/config-switch.png" width="300" alt="config-switch-image"/>
+
+---
+## Use case of `gcp config-switch`
+Switches between gcloud `configuration`s and `compute/region`, similar in spirit to `aws config-switch`.
+
+Unlike the AWS version, this applies the change directly and globally via `gcloud config configurations activate` / `gcloud config set compute/region` rather than exporting env vars into the calling shell. That means the two aliases below are a convenience, not a requirement — running the commands directly also works — but also that there's no per-shell isolation: the change is visible to every shell and every tool that reads gcloud config (Terraform, Docker, other terminals, etc.).
+
+Requires the [`gcloud` CLI](https://cloud.google.com/sdk/docs/install) on `PATH` and an authenticated account.
+
+```shell
+cloud-fusion gcp config-switch configuration
+cloud-fusion gcp config-switch region
+```
+
+- `configuration` also updates the application-default credentials quota project (`gcloud auth application-default set-quota-project`) to match the chosen configuration's project. Pass `--skip-quota-project` to skip this.
+- `region` lists regions via the Compute Engine API, so it needs a project set on the active configuration with that API enabled.
+
+### For Linux & Darwin (MacOS)
+This works with 2 bash script, namely `_gcpc` and `_gcpr`
+
+Post installing the app, create 2 aliases in `.bashrc` or `.zshrc` file.
+```shell
+## cloud fusion setup
+alias gcpc="source _gcpc"
+alias gcpr="source _gcpr"
+```
+
+### For Windows
+This works with 2 powershell script, namely `_gcpc.ps1` and `_gcpr.ps1`
+
+Post installing the app, create 2 aliases in `$PROFILE` (i.e. `$HOME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1`) file.
+```ps1
+## cloud fusion setup
+Set-Alias gcpc "_gcpc.ps1"
+Set-Alias gcpr "_gcpr.ps1"
+```
 
 ---
 ## Migrating from `aws-fusion`

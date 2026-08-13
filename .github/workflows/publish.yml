@@ -20,9 +20,6 @@ on:
 
 concurrency: publish
 
-env:
-  TEST_PUBLISH: ${{ inputs.test_publish && inputs.test_publish || github.event_name == 'pull_request' }}
-
 jobs:
   publish:
     runs-on: ubuntu-latest
@@ -31,8 +28,10 @@ jobs:
       contents: write
       id-token: write
     environment:
-      name: "${{ env.TEST_PUBLISH == 'true' && 'test-' || '' }}pypi"
-      url: "https://${{ env.TEST_PUBLISH == 'true' && 'test.' || '' }}pypi.org/project/cloud-fusion"
+      name: "${{ (inputs.test_publish && inputs.test_publish || github.event_name == 'pull_request') && 'test-' || '' }}pypi"
+      url: "https://${{ (inputs.test_publish && inputs.test_publish || github.event_name == 'pull_request') && 'test.' || '' }}pypi.org/project/cloud-fusion"
+    env:
+      TEST_PUBLISH: ${{ inputs.test_publish && inputs.test_publish || github.event_name == 'pull_request' }}
     steps:
       - name: Checkout 🔔
         uses: actions/checkout@v7

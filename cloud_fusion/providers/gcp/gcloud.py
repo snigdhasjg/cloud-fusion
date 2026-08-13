@@ -9,7 +9,6 @@ from ...exceptions import CloudFusionException
 LOG = logging.getLogger(__name__)
 
 GCLOUD = 'gcloud'
-INSTALL_DOC = 'https://cloud.google.com/sdk/docs/install'
 
 
 class GcloudNotFoundException(CloudFusionException):
@@ -26,14 +25,14 @@ def run(*args, timeout=60):
     """Run `gcloud <args> --quiet` and return stripped stdout. gcloud's own chatter goes to stderr."""
     executable = shutil.which(GCLOUD)
     if executable is None:
-        raise GcloudNotFoundException(f'`{GCLOUD}` not found on PATH. Install the Google Cloud CLI - {INSTALL_DOC}')
+        raise GcloudNotFoundException(f'`{GCLOUD}` not found on PATH.')
 
     command = [executable, *args, '--quiet']
     LOG.debug(f'Running {command}')
     try:
         completed = subprocess.run(command, capture_output=True, text=True, timeout=timeout)
     except FileNotFoundError as e:
-        raise GcloudNotFoundException(f'`{GCLOUD}` not found on PATH. Install the Google Cloud CLI - {INSTALL_DOC}') from e
+        raise GcloudNotFoundException(f'`{GCLOUD}` not found on PATH.') from e
     except subprocess.TimeoutExpired as e:
         raise GcloudCommandException(f'`{GCLOUD} {" ".join(args)}` timed out after {timeout}s') from e
 

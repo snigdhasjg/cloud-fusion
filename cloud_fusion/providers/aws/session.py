@@ -23,7 +23,6 @@ def credentials(profile_name, region_name):
 
     creds = session.get_credentials()
     if creds is None or creds.token is None:
-        LOG.error("No session credential found")
         raise TokenGenerationException("No session credential found")
 
     return creds, session.region_name

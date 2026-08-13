@@ -1,5 +1,4 @@
 import logging
-import sys
 
 import inquirer
 
@@ -42,25 +41,25 @@ def switch_configuration(args):
     name = chosen.get('name')
 
     if active is not None and name == active.get('name'):
-        print(f'Configuration [{name}] is already active', file=sys.stderr)
+        LOG.debug(f'Configuration [{name}] is already active')
         return
 
     activate_configuration(name)
-    print(f'Activated configuration [{name}]', file=sys.stderr)
+    LOG.debug(f'Activated configuration [{name}]')
 
     if args.skip_quota_project:
         return
 
     project = (chosen.get('properties') or {}).get('core', {}).get('project')
     if project is None:
-        print(f'Configuration [{name}] has no project set - skipped updating the application-default quota project', file=sys.stderr)
+        LOG.debug(f'Configuration [{name}] has no project set - skipped updating the application-default quota project')
         return
 
     try:
         set_adc_quota_project(project)
-        print(f'Updated application-default quota project to [{project}]', file=sys.stderr)
-    except GcloudCommandException as e:
-        print(f'Warning: could not update the application-default quota project - {e}', file=sys.stderr)
+        LOG.debug(f'Updated application-default quota project to [{project}]')
+    except GcloudCommandException:
+        LOG.warning(f'Could not update the application-default quota project', exc_info=args.debug)
 
 
 def switch_region(args):
@@ -82,11 +81,11 @@ def switch_region(args):
 
     region = answers.get('region')
     if region == current_region:
-        print(f'Region [{region}] is already set on configuration [{active.get("name")}]', file=sys.stderr)
+        LOG.debug(f'Region [{region}] is already set on configuration [{active.get("name")}]')
         return
 
     set_property(REGION_PROPERTY, region)
-    print(f'Updated region to [{region}] on configuration [{active.get("name")}]', file=sys.stderr)
+    LOG.debug(f'Updated region to [{region}] on configuration [{active.get("name")}]')
 
 
 def __active(available_configurations):

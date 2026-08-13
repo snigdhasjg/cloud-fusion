@@ -20,7 +20,7 @@ def run(args):
         LOG.debug('Creating fusion aws alias')
         if not config.has_section('toplevel'):
             config.add_section('toplevel')
-        config['toplevel']['fusion'] = f'!"{sys.executable}" -m aws_fusion.app'
+        config['toplevel']['fusion'] = f'!"{sys.executable}" -m cloud_fusion.app aws'
 
     def update_aws_cli_alias_file():
         if not os.path.isdir(cli_dir):

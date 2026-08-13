@@ -7,14 +7,14 @@ import webbrowser
 import requests
 from bs4 import BeautifulSoup
 
-from ..exceptions import AwsFusionException
+from ....exceptions import CloudFusionException
 
 
 LOG = logging.getLogger(__name__)
 
 _HTTP_TIMEOUT_SECONDS = 60
 
-class OktaApiException(AwsFusionException):
+class OktaApiException(CloudFusionException):
     """Exception for Okta API call"""
     pass
 

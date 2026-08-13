@@ -4,13 +4,13 @@ import os
 import boto3
 from botocore.utils import JSONFileCache
 
-from ..exceptions import AwsFusionException
+from ...exceptions import CloudFusionException
 
 
 LOG = logging.getLogger(__name__)
 
 
-class TokenGenerationException(AwsFusionException):
+class TokenGenerationException(CloudFusionException):
     """Exception for credential not having token"""
     pass
 

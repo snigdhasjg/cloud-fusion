@@ -2,7 +2,7 @@ import json
 from urllib import parse
 from urllib import request
 
-from ..exceptions import AwsFusionException
+from ...exceptions import CloudFusionException
 
 
 ISSUER = "aws-console-python-script"
@@ -10,7 +10,7 @@ SESSION_DURATION_IN_SECONDS = 43200
 _HTTP_TIMEOUT_SECONDS = 60
 
 
-class AwsFederationException(AwsFusionException):
+class AwsFederationException(CloudFusionException):
     """Exception for AWS console federation API call"""
     pass
 

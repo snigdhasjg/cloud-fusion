@@ -5,8 +5,8 @@ import webbrowser
 
 import pyperclip
 
-from ..aws.api import signin_url
-from ..aws.session import credentials
+from ..api import signin_url
+from ..session import credentials
 
 
 LOG = logging.getLogger(__name__)

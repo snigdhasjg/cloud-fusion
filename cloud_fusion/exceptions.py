@@ -4,8 +4,8 @@ from contextlib import contextmanager
 from botocore.exceptions import BotoCoreError, ClientError
 
 
-class AwsFusionException(Exception):
-    """Base class for all aws-fusion errors surfaced to the user."""
+class CloudFusionException(Exception):
+    """Base class for all cloud-fusion errors surfaced to the user."""
     pass
 
 
@@ -16,7 +16,7 @@ def handle_cli_errors(debug=False):
         yield
     except KeyboardInterrupt:
         sys.exit(130)
-    except (AwsFusionException, ClientError, BotoCoreError) as e:
+    except (CloudFusionException, ClientError, BotoCoreError) as e:
         if debug:
             raise
         sys.exit(str(e))

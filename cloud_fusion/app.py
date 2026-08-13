@@ -2,13 +2,7 @@ import argparse
 import logging
 from . import __version__
 
-from .commands import (
-    init,
-    open_browser,
-    config_switch,
-    iam_user_credentials,
-    okta
-)
+from .providers import aws
 from .exceptions import handle_cli_errors
 
 
@@ -17,15 +11,11 @@ def main():
     global_parser.add_argument('-v', '--version', action='version', help="Display the version of this tool", version=__version__)
     global_parser.add_argument('--debug', action='store_true', help='Turn on debug logging')
 
-    main_parser = argparse.ArgumentParser(prog='aws-fusion', description='Unified CLI tool for streamlined AWS operations, enhancing developer productivity', parents=[global_parser])
+    main_parser = argparse.ArgumentParser(prog='cloud-fusion', description='Unified CLI tool for streamlined cloud operations, enhancing developer productivity', parents=[global_parser])
     subparsers = main_parser.add_subparsers(dest='command', required=True, help='Available commands')
 
     commands = [
-        init,
-        open_browser,
-        iam_user_credentials,
-        okta,
-        config_switch
+        aws
     ]
     [command.setup(subparsers, global_parser) for command in commands]
 

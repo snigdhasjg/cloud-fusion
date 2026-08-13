@@ -12,28 +12,6 @@ wheels = [
 ]
 
 [[package]]
-name = "aws-fusion"
-source = { editable = "." }
-dependencies = [
-    { name = "beautifulsoup4" },
-    { name = "boto3" },
-    { name = "inquirer" },
-    { name = "keyring" },
-    { name = "pyperclip" },
-    { name = "requests" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "beautifulsoup4", specifier = ">=4.14.3" },
-    { name = "boto3", specifier = ">=1.43.18" },
-    { name = "inquirer", specifier = ">=3.4.1" },
-    { name = "keyring", specifier = ">=25.7.0" },
-    { name = "pyperclip", specifier = ">=1.11.0" },
-    { name = "requests", specifier = ">=2.34.2" },
-]
-
-[[package]]
 name = "backports-tarfile"
 version = "1.2.0"
 source = { registry = "https://pypi.org/simple" }
@@ -193,6 +171,28 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/5d/78/1b74c5bbb3f99b77a1715c91b3e0b5bdb6fe302d95ace4f5b1bec37b0167/charset_normalizer-3.4.7-cp313-cp313-win_amd64.whl", hash = "sha256:3946fa46a0cf3e4c8cb1cc52f56bb536310d34f25f01ca9b6c16afa767dab110", size = 158819, upload-time = "2026-04-02T09:27:04.454Z" },
     { url = "https://files.pythonhosted.org/packages/68/86/46bd42279d323deb8687c4a5a811fd548cb7d1de10cf6535d099877a9a9f/charset_normalizer-3.4.7-cp313-cp313-win_arm64.whl", hash = "sha256:80d04837f55fc81da168b98de4f4b797ef007fc8a79ab71c6ec9bc4dd662b15b", size = 147915, upload-time = "2026-04-02T09:27:05.971Z" },
     { url = "https://files.pythonhosted.org/packages/db/8f/61959034484a4a7c527811f4721e75d02d653a35afb0b6054474d8185d4c/charset_normalizer-3.4.7-py3-none-any.whl", hash = "sha256:3dce51d0f5e7951f8bb4900c257dad282f49190fdbebecd4ba99bcc41fef404d", size = 61958, upload-time = "2026-04-02T09:28:37.794Z" },
+]
+
+[[package]]
+name = "cloud-fusion"
+source = { editable = "." }
+dependencies = [
+    { name = "beautifulsoup4" },
+    { name = "boto3" },
+    { name = "inquirer" },
+    { name = "keyring" },
+    { name = "pyperclip" },
+    { name = "requests" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "beautifulsoup4", specifier = ">=4.14.3" },
+    { name = "boto3", specifier = ">=1.43.18" },
+    { name = "inquirer", specifier = ">=3.4.1" },
+    { name = "keyring", specifier = ">=25.7.0" },
+    { name = "pyperclip", specifier = ">=1.11.0" },
+    { name = "requests", specifier = ">=2.34.2" },
 ]
 
 [[package]]

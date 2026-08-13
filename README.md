@@ -1,31 +1,29 @@
-# aws fusion
-
-> [!WARNING]
-> This repository is archived. Development has moved to [cloud-fusion](https://github.com/snigdhasjg/cloud-fusion), published on PyPI as [cloud-fusion](https://pypi.org/project/cloud-fusion). Please migrate to the new project.
-
-Unified CLI tool for streamlined AWS operations, enhancing developer productivity
+# cloud fusion
+Unified CLI tool for streamlined cloud operations, enhancing developer productivity
 
 [![Tag][tag-badge]][tag]
 [![Publish][actions-workflow-publish-badge]][actions-workflow-publish]
+
+> Formerly `aws-fusion`. See [Migrating from aws-fusion](#migrating-from-aws-fusion) below.
 
 ## Installation
 Install via pip install
 
 ```shell
-pip install aws-fusion
+pip install cloud-fusion
 ```
 
 ## Command line tool
 To invoke the cli, there are 2 option
-1. Directly use `aws-fusion` command
+1. Directly use `cloud-fusion` command
 2. Use it via [aws cli alias](https://docs.aws.amazon.com/cli/latest/userguide/cli-usage-alias.html) with `aws fusion`
 
 ## Usage
 
 ```commandline
-usage: aws-fusion [<flags>] <command> ...
+usage: cloud-fusion [<flags>] <command> ...
 
-Unified CLI tool for streamlined AWS operations, enhancing developer productivity
+Unified CLI tool for streamlined cloud operations, enhancing developer productivity
 
 Flags:
   -h, --help    show this help message and exit
@@ -33,24 +31,36 @@ Flags:
   --debug       Turn on debug logging
 
 Command:
+  aws [<flags>] <sub-command>
+    AWS authentication and convenience commands.
+```
+
+### `aws` sub-commands
+
+```commandline
+usage: cloud-fusion aws [<flags>] <sub-command> ...
+
+AWS authentication and convenience commands.
+
+Command:
   init [<flags>]
     Initialize fusion app with creation of aws fusion alias.
-  
+
   open-browser [<flags>] [<args>]
     Open a web browser for graphical access to the AWS Console.
-    
+
     -p, --profile PROFILE The AWS profile to create the pre-signed URL with
     -r, --region REGION   The AWS Region to send the request to
         --no-logout       Skip logging out of the existing AWS console session before signing in (needed for AWS multi-session)
         --clip            Don't open the web browser, but copy the signin URL to clipboard
         --stdout          Don't open the web browser, but echo the signin URL to stdout
-  
+
   iam-user-credentials [<flags>] <sub-command>
     IAM User credential helper.
 
   iam-user-credentials get [<flags>] [<args>]
     Retrieve IAM user credentials for AWS CLI profiles or application authentication.
-        
+
         --access-key ACCESS_KEY AWS access key
         --account-id ACCOUNT_ID AWS Account ID for the name
         --username USERNAME     Username of a AWS user associated with the access key for the name
@@ -58,15 +68,15 @@ Command:
 
   iam-user-credentials store [<flags>] [<args>]
     Store IAM user access key and secret key securely for streamlined authentication.
-    
+
         --access-key ACCESS_KEY AWS access key
         --account-id ACCOUNT_ID AWS Account ID for the name
         --username USERNAME     Username of a AWS user associated with the access key for the name
         --secret-key SECRET_KEY AWS secret key
-        
+
   okta [<flags>] <sub-command>
     Generate AWS session credentials from Okta.
-    
+
   okta device-auth [<flags>] [<args>]
     Generate AWS session credentials using SAML assertion from Okta device authentication.
 
@@ -78,10 +88,10 @@ Command:
 
   config-switch [<flags>] <sub-command>
     Switching between AWS config.
-    
+
   config-switch profile [<flags>]
     Switch between available aws profile.
-  
+
   config-switch region [<flags>]
     Switch between available aws region.
 ```
@@ -148,7 +158,7 @@ To store IAM user credential in the system credential store for best security ra
 
 Manually the save the credential in the store using
 ```bash
-aws-fusion iam-user-credentials store \
+cloud-fusion aws iam-user-credentials store \
     --access-key 'AKIAIOSFODNN7EXAMPLE' \
     --secret-key 'wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY' \
     --account-id '123456789012' \
@@ -164,7 +174,7 @@ Configure aws config file to use credential process
 [profile iam-user]
 region = us-east-1
 output = json
-credential_process = aws-fusion iam-user-credentials get --account-id 123456789012 --username 'my-iam-user' --access-key 'AKIAIOSFODNN7EXAMPLE' --credential-process
+credential_process = cloud-fusion aws iam-user-credentials get --account-id 123456789012 --username 'my-iam-user' --access-key 'AKIAIOSFODNN7EXAMPLE' --credential-process
 ```
 
 ### Refer
@@ -180,7 +190,7 @@ Configure aws config file to use credential process
 [profile iam-user]
 region = us-east-1
 output = json
-credential_process = aws-fusion okta device-auth --org-domain my.okta.com --oidc-client-id 0pbs4fq1q2vbGoFkC1m7 --aws-acct-fed-app-id 0oa8z9xa8BS9b2AFb1t7 --aws-iam-role arn:aws:iam::123456789012:role/PowerUsers --credential-process
+credential_process = cloud-fusion aws okta device-auth --org-domain my.okta.com --oidc-client-id 0pbs4fq1q2vbGoFkC1m7 --aws-acct-fed-app-id 0oa8z9xa8BS9b2AFb1t7 --aws-iam-role arn:aws:iam::123456789012:role/PowerUsers --credential-process
 ```
 
 ---
@@ -192,7 +202,7 @@ This works with 2 bash script, namely `_awsp` and `_awsr`
 
 Post installing the app, create 2 aliases in `.bashrc` or `.zshrc` file.
 ```shell
-## aws fusion setup
+## cloud fusion setup
 alias awsp="source _awsp"
 alias awsr="source _awsr"
 ```
@@ -204,12 +214,31 @@ This works with 2 powershell script, namely `_awsp.ps1` and `_awsr.ps1`
 
 Post installing the app, create 2 aliases in `$PROFILE` (i.e. `$HOME\Documents\PowerShell\Microsoft.PowerShell_profile.ps1`) file.
 ```ps1
-## aws fusion setup
+## cloud fusion setup
 Set-Alias awsp "_awsp.ps1"
 Set-Alias awsr "_awsr.ps1"
 ```
 
-<img src="https://raw.githubusercontent.com/snigdhasjg/aws-fusion/main/doc/images/config-switch.png" width="300" alt="config-switch-image"/>
+<img src="https://raw.githubusercontent.com/snigdhasjg/cloud-fusion/main/doc/images/config-switch.png" width="300" alt="config-switch-image"/>
+
+---
+## Migrating from `aws-fusion`
+`aws-fusion` has been renamed to `cloud-fusion` to make room for other cloud providers alongside AWS. AWS commands now live under an `aws` sub-command:
+
+```shell
+pip uninstall aws-fusion
+pip install cloud-fusion
+```
+
+| Before                            | After                                  |
+|------------------------------------|-----------------------------------------|
+| `aws-fusion init`                  | `cloud-fusion aws init`                 |
+| `aws-fusion open-browser`          | `cloud-fusion aws open-browser`         |
+| `aws-fusion iam-user-credentials`  | `cloud-fusion aws iam-user-credentials` |
+| `aws-fusion okta device-auth`      | `cloud-fusion aws okta device-auth`     |
+| `aws-fusion config-switch`         | `cloud-fusion aws config-switch`        |
+
+If you use the `aws fusion` alias or any `credential_process` line in `~/.aws/config`, re-run `cloud-fusion aws init` and update the `credential_process` commands above.
 
 ---
 ## License
@@ -217,8 +246,8 @@ This project is licensed under the Mozilla Public License 2.0 - see the [LICENSE
 
 <!-- badge links -->
 
-[tag]: https://github.com/snigdhasjg/aws-fusion/tags
-[tag-badge]: https://img.shields.io/github/v/tag/snigdhasjg/aws-fusion?style=for-the-badge&logo=github
+[tag]: https://github.com/snigdhasjg/cloud-fusion/tags
+[tag-badge]: https://img.shields.io/github/v/tag/snigdhasjg/cloud-fusion?style=for-the-badge&logo=github
 
-[actions-workflow-publish]: https://github.com/snigdhasjg/aws-fusion/actions/workflows/publish.yml
-[actions-workflow-publish-badge]: https://img.shields.io/github/actions/workflow/status/snigdhasjg/aws-fusion/publish.yml?branch=main&label=Publish&style=for-the-badge&logo=githubactions
+[actions-workflow-publish]: https://github.com/snigdhasjg/cloud-fusion/actions/workflows/publish.yml
+[actions-workflow-publish-badge]: https://img.shields.io/github/actions/workflow/status/snigdhasjg/cloud-fusion/publish.yml?branch=main&label=Publish&style=for-the-badge&logo=githubactions

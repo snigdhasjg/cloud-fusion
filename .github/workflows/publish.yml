@@ -12,7 +12,7 @@ on:
     branches:
       - "main"
     paths:
-      - "aws_fusion/__init__.py"
+      - "cloud_fusion/__init__.py"
 
   pull_request:
     branches:
@@ -33,7 +33,7 @@ jobs:
       id-token: write
     environment:
       name: "pypi"
-      url: "https://${{ env.TEST_PUBLISH == 'true' && 'test.' || '' }}pypi.org/project/aws-fusion"
+      url: "https://${{ env.TEST_PUBLISH == 'true' && 'test.' || '' }}pypi.org/project/cloud-fusion"
     steps:
       - name: Checkout 🔔
         uses: actions/checkout@v6
@@ -48,15 +48,15 @@ jobs:
       - name: Package Info
         id: package_info
         run: |
-          current_version=$(sed -nE "s/^__version__ = ['\"]([^'\"]+)['\"].*$/\1/p" aws_fusion/__init__.py)
+          current_version=$(sed -nE "s/^__version__ = ['\"]([^'\"]+)['\"].*$/\1/p" cloud_fusion/__init__.py)
 
           if [[ "${{ env.TEST_PUBLISH }}" == "true" ]]; then
             updated_version="${current_version}.${{ github.run_number }}"
-            sed -i -E "s|(__version__\s+=\s['\"])${current_version}(['\"])|\1${updated_version}\2|g" aws_fusion/__init__.py
+            sed -i -E "s|(__version__\s+=\s['\"])${current_version}(['\"])|\1${updated_version}\2|g" cloud_fusion/__init__.py
             current_version="${updated_version}"
           fi
 
-          echo "::notice file=aws_fusion/__init__.py::version=${current_version}"
+          echo "::notice file=cloud_fusion/__init__.py::version=${current_version}"
           echo "version=${current_version}" >> "$GITHUB_OUTPUT"
 
       - name: Add git tag

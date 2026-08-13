@@ -1,7 +1,7 @@
 import logging
 from argparse import ArgumentParser
 
-from ..aws.assume_role import AssumeRoleWithSamlCache
+from ..assume_role import AssumeRoleWithSamlCache
 from ..okta.api import device_auth
 from ..okta.api import saml_assertion
 from ..okta.api import session_and_token

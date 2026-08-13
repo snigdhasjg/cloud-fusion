@@ -1,6 +1,6 @@
 #!/bin/bash
 
-aws-fusion config-switch region
+cloud-fusion aws config-switch region
 # If non-zero status from program, then exit from here
 [ $? -ne 0 ] && return
 

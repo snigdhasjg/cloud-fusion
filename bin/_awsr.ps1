@@ -1,5 +1,5 @@
 # Switch AWS region
-cloud-fusion aws config-switch region
+cloud-fusion aws config-switch region @args
 if ($LASTEXITCODE -ne 0) {
     return
 }

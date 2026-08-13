@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cloud-fusion aws config-switch profile
+cloud-fusion aws config-switch profile "$@"
 # If non-zero status from program, then exit from here
 [ $? -ne 0 ] && return
 

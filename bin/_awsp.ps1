@@ -1,5 +1,5 @@
 # Switch AWS profile
-cloud-fusion aws config-switch profile
+cloud-fusion aws config-switch profile @args
 if ($LASTEXITCODE -ne 0) {
     return
 }

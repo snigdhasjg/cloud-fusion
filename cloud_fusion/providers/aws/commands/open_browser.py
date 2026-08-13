@@ -19,7 +19,7 @@ def setup(subparsers, parent_parser):
 
     parser.add_argument('-p', '--profile', default=os.getenv("AWS_PROFILE"), help="The AWS profile to create the pre-signed URL with")
     parser.add_argument('-r', '--region', default=os.getenv("AWS_REGION", os.getenv("AWS_DEFAULT_REGION")), help="The AWS Region to send the request to")
-    parser.add_argument('--no-logout', action='store_true', help="Skip logging out of the existing AWS console session before signing in")
+    parser.add_argument('--logout', action='store_true', help="Skip logging out of the existing AWS console session before signing in")
 
     no_browser_group = parser.add_mutually_exclusive_group()
     no_browser_group.add_argument('--clip', action='store_true', help="Don't open the web browser, but copy the signin URL to clipboard")
@@ -28,7 +28,7 @@ def setup(subparsers, parent_parser):
 
 def run(args):
     creds, region_name = credentials(args.profile, args.region)
-    url = signin_url(creds, region_name, logout=not args.no_logout)
+    url = signin_url(creds, region_name, logout=args.logout)
     LOG.debug(f'Generated aws console URL: {url}')
 
     if args.clip:

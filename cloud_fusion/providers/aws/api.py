@@ -15,7 +15,7 @@ class AwsFederationException(CloudFusionException):
     pass
 
 
-def signin_url(creds, region_name, logout=True):
+def signin_url(creds, region_name, logout=False):
     login_request_url = __aws_login_url(
         creds.access_key, creds.secret_key, creds.token, region_name)
     if logout:

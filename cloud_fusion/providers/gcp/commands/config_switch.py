@@ -40,10 +40,6 @@ def switch_configuration(args):
     chosen = next(each for each in available_configurations if each.get('name') == answers.get('configuration'))
     name = chosen.get('name')
 
-    if active is not None and name == active.get('name'):
-        LOG.debug(f'Configuration [{name}] is already active')
-        return
-
     activate_configuration(name)
     LOG.debug(f'Activated configuration [{name}]')
 
@@ -80,10 +76,6 @@ def switch_region(args):
     answers = inquirer.prompt([region_inquiry], theme=inquirer.themes.GreenPassion(), raise_keyboard_interrupt=True)
 
     region = answers.get('region')
-    if region == current_region:
-        LOG.debug(f'Region [{region}] is already set on configuration [{active.get("name")}]')
-        return
-
     set_property(REGION_PROPERTY, region)
     LOG.debug(f'Updated region to [{region}] on configuration [{active.get("name")}]')
 

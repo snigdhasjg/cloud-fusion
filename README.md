@@ -1,4 +1,8 @@
 # aws fusion
+
+> [!WARNING]
+> This repository is archived. Development has moved to [cloud-fusion](https://github.com/snigdhasjg/cloud-fusion), published on PyPI as [cloud-fusion](https://pypi.org/project/cloud-fusion). Please migrate to the new project.
+
 Unified CLI tool for streamlined AWS operations, enhancing developer productivity
 
 [![Tag][tag-badge]][tag]

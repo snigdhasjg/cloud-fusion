@@ -77,18 +77,6 @@ Command:
         --username USERNAME     Username of a AWS user associated with the access key for the name
         --secret-key SECRET_KEY AWS secret key
 
-  okta [<flags>] <sub-command>
-    Generate AWS session credentials from Okta.
-
-  okta device-auth [<flags>] [<args>]
-    Generate AWS session credentials using SAML assertion from Okta device authentication.
-
-        --org-domain ORG_DOMAIN                   Full domain hostname of the Okta org e.g. example.okta.com
-        --oidc-client-id OIDC_CLIENT_ID           The ID is the identifier of the client is Okta app acting as the IdP for AWS
-        --aws-acct-fed-app-id AWS_ACCT_FED_APP_ID The ID for the AWS Account Federation integration app
-        --aws-iam-role AWS_IAM_ROLE               The AWS IAM Role ARN to assume
-        --credential-process                      Output the credential in AWS credential process syntax
-
   config-switch [<flags>] <sub-command>
     Switching between AWS config.
 
@@ -205,18 +193,6 @@ The docs
 - https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-sourcing-external.html
 
 ---
-## Use case of `okta device-auth`
-Configure aws config file to use credential process
-
-**Config file**
-```
-[profile iam-user]
-region = us-east-1
-output = json
-credential_process = cloud-fusion aws okta device-auth --org-domain my.okta.com --oidc-client-id 0pbs4fq1q2vbGoFkC1m7 --aws-acct-fed-app-id 0oa8z9xa8BS9b2AFb1t7 --aws-iam-role arn:aws:iam::123456789012:role/PowerUsers --credential-process
-```
-
----
 ## Use case of `aws config-switch`
 A special of utility script to help easily switch `profile` and `region`
 
@@ -294,7 +270,6 @@ pip install cloud-fusion
 | `aws-fusion init`                  | `cloud-fusion aws init`                 |
 | `aws-fusion open-browser`          | `cloud-fusion aws open-browser`         |
 | `aws-fusion iam-user-credentials`  | `cloud-fusion aws iam-user-credentials` |
-| `aws-fusion okta device-auth`      | `cloud-fusion aws okta device-auth`     |
 | `aws-fusion config-switch`         | `cloud-fusion aws config-switch`        |
 
 If you use the `aws fusion` alias or any `credential_process` line in `~/.aws/config`, re-run `cloud-fusion aws init` and update the `credential_process` commands above.

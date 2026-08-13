@@ -1,4 +1,4 @@
-from .commands import init, open_browser, iam_user_credentials, okta, config_switch
+from .commands import init, open_browser, iam_user_credentials, config_switch
 
 
 def setup(subparsers, parent_parser):
@@ -10,7 +10,6 @@ def setup(subparsers, parent_parser):
         init,
         open_browser,
         iam_user_credentials,
-        okta,
         config_switch
     ]
     [command.setup(aws_subparsers, parent_parser) for command in _commands]

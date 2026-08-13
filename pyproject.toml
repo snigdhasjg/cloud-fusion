@@ -43,8 +43,6 @@ dependencies = [
     "boto3>=1.43.18",
     "pyperclip>=1.11.0",
     "keyring>=25.7.0",
-    "beautifulsoup4>=4.14.3",
-    "requests>=2.34.2",
     "inquirer>=3.4.1",
 ]
 

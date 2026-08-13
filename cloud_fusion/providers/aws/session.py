@@ -22,7 +22,7 @@ def credentials(profile_name, region_name):
     __update_credential_provider_cache(session)
 
     creds = session.get_credentials()
-    if creds.token is None:
+    if creds is None or creds.token is None:
         LOG.error("No session credential found")
         raise TokenGenerationException("No session credential found")
 
